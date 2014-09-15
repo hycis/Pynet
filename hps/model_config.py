@@ -94,10 +94,10 @@ model_config = DD({
                     # 'experiment_name'       : 'AE0912_Blocks_500_180_tanh_tanh_gpu',
                     # 'experiment_name'       : 'AE0912_Blocks_500_180_tanh_tanh_gpu_clean',
 
-                    'experiment_name'       : 'AE0914_warp_blocks_blackout',
+                    'experiment_name'       : 'AE0914_warp_blocks_500_180_tanh_gpu_blackout',
 
 
-                    'description'           : 'using_ndim_equals_self.dim',
+                    'description'           : None,
                     'save_outputs'          : True,
                     'save_hyperparams'      : True,
                     'save_model'            : True,
@@ -123,21 +123,21 @@ model_config = DD({
 
             #===========================[ Dataset ]===========================#
             'dataset' : DD({
-                    # 'type'                  : 'Laura_Warp_Blocks_500_Tanh',
+                    'type'                  : 'Laura_Warp_Blocks_500_Tanh',
                     # 'type'                  : 'Laura_Cut_Warp_Blocks_300',
                     # 'type'                  : 'Laura_Blocks_500',
                     # 'type'                  : 'Laura_Blocks',
-                    'type'                  : 'Laura_Warp_Blocks',
+                    # 'type'                  : 'Laura_Warp_Blocks',
                     # 'type'                  : 'Laura_Warp_Standardize_Blocks',
                     # 'type'                  : 'Laura_Standardize_Blocks',
                     # 'type'                  : 'Mnist',
 
-                    'feature_size'          : 2049,
+                    'feature_size'          : 500,
                     'train_valid_test_ratio': [8, 1, 1],
 
-                    # 'preprocessor'          : None,
+                    'preprocessor'          : None,
                     # 'preprocessor'          : 'Scale',
-                    'preprocessor'          : 'GCN',
+                    # 'preprocessor'          : 'GCN',
                     # 'preprocessor'          : 'LogGCN',
                     # 'preprocessor'          : 'Standardize',
 
@@ -153,7 +153,7 @@ model_config = DD({
             'hidden1' : DD({
                     'name'                  : 'hidden1',
                     'type'                  : 'Tanh',
-                    'dim'                   : 500,
+                    'dim'                   : 180,
 
                     # 'blackout_below'        : None,
                     # 'blackout_below'         : (0.1, 0.2, 0.3, 0.4, 0.5),
