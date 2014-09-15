@@ -11,7 +11,7 @@ class Layer(object):
     Abstract Class
     """
 
-    def __init__(self, dim, name, W=None, b=None, dropout_below=None, blackout_below=None):
+    def __init__(self, dim, name, W=None, b=None, blackout_below=None):
         """
         DESCRIPTION:
             This is an abstract layer class
@@ -20,14 +20,11 @@ class Layer(object):
             name(string): name of the layer
             W(tensor variable): Weight of 2D tensor matrix
             b(tensor variable): bias of 2D tensor matrix
-            dropout_below: probability of the inputs from the layer below been masked out
         """
         self.dim = dim
         self.name = name
         self.W = W
         self.b = b
-        assert not (dropout_below and blackout_below), 'cannot set both dropout and blackout'
-        self.dropout_below = dropout_below
         self.blackout_below = blackout_below
 
         if self.W is not None and self.W.name is None:
@@ -46,13 +43,6 @@ class Layer(object):
         DESCRIPTION:
             mask out the state_below with probability of self.dropout
         """
-
-        if self.dropout_below is not None:
-            assert self.dropout_below >= 0. and self.dropout_below <= 1., \
-                    'dropout_below is not in range [0,1]'
-            state_below = theano_rand.binomial(size=state_below.shape, n=1,
-                                               p=(1-self.dropout_below),
-                                               dtype=floatX) * state_below
         if self.blackout_below is not None:
             assert self.blackout_below >= 0. and self.blackout_below <= 1., \
                     'blackout_below is not in range [0,1]'
@@ -68,6 +58,7 @@ class Layer(object):
 		PARAM:
 			state_below: 2d array of inputs from layer below
         """
+        state_below = self._mask_state_below(state_below)
         return T.dot(state_below, self.W) + self.b
 
     def _layer_stats(self, state_below, layer_output):
@@ -124,7 +115,6 @@ class Linear(Layer):
         return output
 
     def _train_fprop(self, state_below):
-        state_below = self._mask_state_below(state_below)
         output = self._linear_part(state_below)
         return output
 
@@ -135,7 +125,6 @@ class Sigmoid(Layer):
         return T.nnet.sigmoid(output)
 
     def _train_fprop(self, state_below):
-        state_below = self._mask_state_below(state_below)
         output = self._linear_part(state_below)
         return T.nnet.sigmoid(output)
 
@@ -146,7 +135,6 @@ class RELU(Layer):
         return output * (output > 0.)
 
     def _train_fprop(self, state_below):
-        state_below = self._mask_state_below(state_below)
         output = self._linear_part(state_below)
         return output * (output > 0.)
 
@@ -157,7 +145,6 @@ class Softmax(Layer):
         return T.nnet.softmax(output)
 
     def _train_fprop(self, state_below):
-        state_below = self._mask_state_below(state_below)
         output = self._linear_part(state_below)
         return T.nnet.softmax(output)
 
@@ -168,7 +155,6 @@ class Tanh(Layer):
         return T.tanh(output)
 
     def _train_fprop(self, state_below):
-        state_below = self._mask_state_below(state_below)
         output = self._linear_part(state_below)
         return T.tanh(output)
 
@@ -179,6 +165,5 @@ class Softplus(Layer):
         return T.nnet.softplus(output)
 
     def _train_fprop(self, state_below):
-        state_below = self._mask_state_below(state_below)
         output = self._linear_part(state_below)
         return T.nnet.softplus(output)

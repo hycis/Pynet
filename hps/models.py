@@ -128,13 +128,11 @@ class AE:
         model = AutoEncoder(input_dim = input_dim, rand_seed=self.state.model.rand_seed)
         hidden1 = getattr(layer, self.state.hidden1.type)(dim=self.state.hidden1.dim,
                                                         name=self.state.hidden1.name,
-                                                        dropout_below=self.state.hidden1.dropout_below,
                                                         blackout_below=self.state.hidden1.blackout_below)
         model.add_encode_layer(hidden1)
         h1_mirror = getattr(layer, self.state.h1_mirror.type)(dim=input_dim,
                                                             name=self.state.h1_mirror.name,
                                                             W=hidden1.W.T,
-                                                            dropout_below=self.state.h1_mirror.dropout_below,
                                                             blackout_below=self.state.h1_mirror.blackout_below)
         model.add_decode_layer(h1_mirror)
         return model
@@ -143,12 +141,10 @@ class AE:
         model = AutoEncoder(input_dim = input_dim, rand_seed=self.state.model.rand_seed)
         hidden1 = getattr(layer, self.state.hidden1.type)(dim=self.state.hidden1.dim,
                                                         name=self.state.hidden1.name,
-                                                        dropout_below=self.state.hidden1.dropout_below,
                                                         blackout_below=self.state.hidden1.blackout_below)
         model.add_encode_layer(hidden1)
         h1_mirror = getattr(layer, self.state.h1_mirror.type)(dim=input_dim,
                                                             name=self.state.h1_mirror.name,
-                                                            dropout_below=self.state.h1_mirror.dropout_below,
                                                             blackout_below=self.state.h1_mirror.blackout_below)
         model.add_decode_layer(h1_mirror)
         return model
@@ -157,13 +153,11 @@ class AE:
         model = AutoEncoder(input_dim=input_dim, rand_seed=self.state.model.rand_seed)
         hidden1 = getattr(layer, self.state.hidden1.type)(dim=self.state.hidden1.dim,
                                                         name=self.state.hidden1.name,
-                                                        dropout_below=self.state.hidden1.dropout_below,
                                                         blackout_below=self.state.hidden1.blackout_below)
         model.add_encode_layer(hidden1)
 
         hidden2 = getattr(layer, self.state.hidden2.type)(dim=self.state.hidden2.dim,
                                                         name=self.state.hidden2.name,
-                                                        dropout_below=self.state.hidden2.dropout_below,
                                                         blackout_below=self.state.hidden2.blackout_below)
         model.add_encode_layer(hidden2)
 
@@ -184,7 +178,6 @@ class AE:
                             'records' : {'Dataset'          : dataset.__class__.__name__,
                                          'max_col_norm'     : learning_rule.max_col_norm,
                                          'Weight_Init_Seed' : model.rand_seed,
-                                         'Dropout_Below'    : str([layer.dropout_below for layer in model.layers]),
                                          'Blackout_Below'   : str([layer.blackout_below for layer in model.layers]),
                                          'Batch_Size'       : dataset.batch_size,
                                          'nblocks'          : dataset.nblocks(),
@@ -225,7 +218,7 @@ class AE_Testing(AE):
 
         # fine tuning
         log.info("fine tuning")
-        train_obj.model.layers[0].dropout_below = None
+        train_obj.model.layers[0].blackout_below = None
         train_obj.setup()
         train_obj.run()
 
@@ -263,7 +256,7 @@ class Laura(AE):
 
         # fine tuning
         log.info("fine tuning")
-        train_obj.model.layers[0].dropout_below = None
+        train_obj.model.layers[0].blackout_below = None
         train_obj.setup()
         train_obj.run()
 
@@ -295,7 +288,7 @@ class Laura_Two_Layers(AE):
         learning_rule = self.build_learning_rule()
 
         model = self.build_model(dataset.feature_size())
-        model.layers[0].dropout_below = self.state.hidden1.dropout_below
+        model.layers[0].blackout_below = self.state.hidden1.blackout_below
 
         if self.state.log.save_to_database_name:
             database = self.build_database(dataset, learning_rule, model)
@@ -310,8 +303,8 @@ class Laura_Two_Layers(AE):
 
         # fine tuning
         log.info("fine tuning")
-        train_obj.model.layers[0].dropout_below = None
-        train_obj.model.layers[1].dropout_below = None
+        train_obj.model.layers[0].blackout_below = None
+        train_obj.model.layers[1].blackout_below = None
         # train_obj.setup()
         train_obj.run()
 
@@ -350,7 +343,7 @@ class Laura_Three_Layers(AE):
         learning_rule = self.build_learning_rule()
 
         model = self.build_model(dataset.feature_size())
-        model.layers[0].dropout_below = self.state.hidden1.dropout_below
+        model.layers[0].blackout_below = self.state.hidden1.blackout_below
 
         if self.state.log.save_to_database_name:
             database = self.build_database(dataset, learning_rule, model)
@@ -365,7 +358,7 @@ class Laura_Three_Layers(AE):
 
         # fine tuning
         log.info("fine tuning")
-        train_obj.model.layers[0].dropout_below = None
+        train_obj.model.layers[0].blackout_below = None
         train_obj.setup()
         train_obj.run()
 
@@ -399,6 +392,6 @@ class Laura_Two_Layers_No_Transpose(AE):
 
         # fine tuning
         log.info("fine tuning")
-        train_obj.model.layers[0].dropout_below = None
+        train_obj.model.layers[0].blackout_below = None
         train_obj.setup()
         train_obj.run()

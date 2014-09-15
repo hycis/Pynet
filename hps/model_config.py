@@ -56,8 +56,6 @@ model_config = DD({
                     'name'                  : 'hidden1',
                     'type'                  : 'Sigmoid',
                     'dim'                   : 100,
-                    # 'dropout_below'         : (0.05, 0.1, 0.15, 0.2)
-                    'dropout_below'         : 0.5,
                     'blackout_below'        : None
                     }), # end hidden_layer
 
@@ -65,7 +63,6 @@ model_config = DD({
                     'name'                  : 'h1_mirror',
                     'type'                  : 'Sigmoid',
                     # 'dim'                   : 2049, # dim = input.dim
-                    'dropout_below'         : None,
                     'blackout_below'        : None
                     }) # end output_layer
             }), # end autoencoder
@@ -158,10 +155,6 @@ model_config = DD({
                     'type'                  : 'Tanh',
                     'dim'                   : 500,
 
-                    'dropout_below'         : None,
-                    # 'dropout_below'         : (0.1, 0.2, 0.3, 0.4, 0.5),
-                    # 'dropout_below'         : 0.5,
-
                     # 'blackout_below'        : None,
                     # 'blackout_below'         : (0.1, 0.2, 0.3, 0.4, 0.5),
                     'blackout_below'        : 0.5
@@ -171,7 +164,6 @@ model_config = DD({
                     'name'                  : 'hidden2',
                     'type'                  : 'RELU',
                     'dim'                   : 100,
-                    'dropout_below'         : None,
                     'blackout_below'        : None
                     }), # end hidden_layer
 
@@ -179,7 +171,6 @@ model_config = DD({
                     'name'                  : 'h2_mirror',
                     'type'                  : 'RELU',
                     # 'dim'                   : 2049, # dim = input.dim
-                    'dropout_below'         : None,
                     'blackout_below'        : None
                     }), # end output_layer
 
@@ -187,7 +178,6 @@ model_config = DD({
                     'name'                  : 'h1_mirror',
                     'type'                  : 'Tanh',
                     # 'dim'                   : 2049, # dim = input.dim
-                    'dropout_below'         : None,
                     'blackout_below'        : None
                     }) # end output_layer
 
@@ -262,8 +252,6 @@ model_config = DD({
                 'model'                 : 'AE0830_Warp_Blocks_2049_500_tanh_gpu_20140902_0012_36590657',
                 # 'model'                 : 'AE0829_Blocks_2049_500_tanh_gpu_20140909_1830_02651227',
                 # 'model'                 : 'AE_Testing_Mnist_784_500_20140908_2334_51851812',
-                'dropout_below'         : None,
-                # 'dropout_below'         : 0.1,
                 'blackout_below'        : None
                 }), # end hidden_layer
 
@@ -272,7 +260,6 @@ model_config = DD({
                 'model'                 : 'AE0829_Warp_Blocks_500_180_tanh_20140906_0954_36649151',
                 # 'model'                 : 'AE_Testing_Mnist_500_100_20140908_2336_51698773',
                 # 'model'                 : 'AE0901_Warp_Blocks_500_180_tanh_gpu_20140909_1734_17854128',
-                'dropout_below'         : None,
                 'blackout_below'        : None
                 }), # end hidden_layer
 
@@ -340,22 +327,18 @@ model_config = DD({
         'hidden1' : DD({
                 'name'                  : 'hidden1',
                 'model'                 : 'AE0713_Warp_500_20140714_1317_43818059',
-                'dropout_below'         : (0.1, 0.2, 0.3, 0.4, 0.5),
-                # 'dropout_below'         : 0.1,
                 'blackout_below'        : None
                 }), # end hidden_layer
 
         'hidden2' : DD({
                 'name'                  : 'hidden2',
                 'model'                 : 'AE0721_Warp_Blocks_500_180_20140723_0131_16567449',
-                'dropout_below'         : None,
                 'blackout_below'        : None
                 }), # end hidden_layer
 
         'hidden3' : DD({
                 'name'                  : 'hidden3',
                 'model'                 : 'AE0726_Warp_Blocks_180_120_20140727_1631_00459828',
-                'dropout_below'         : None,
                 'blackout_below'        : None
                 }), # end hidden_layer
 
@@ -427,8 +410,6 @@ model_config = DD({
                 'name'                  : 'hidden1',
                 'type'                  : 'Tanh',
                 'dim'                   : 64,
-                'dropout_below'         : (0.1, 0.2, 0.3, 0.4, 0.5),
-                # 'dropout_below'         : 0.1,
                 'blackout_below'        : None
                 }), # end hidden_layer
 
@@ -437,7 +418,6 @@ model_config = DD({
                 'name'                  : 'h1_mirror',
                 'type'                  : 'RELU',
                 # 'dim'                   : 2049, # dim = input.dim
-                'dropout_below'         : None,
                 'blackout_below'        : None
                 }) # end output_layer
 

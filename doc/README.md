@@ -6,10 +6,10 @@ In pynet, there are three environment variables to be set.
 
 ```python
 PYNET_DATA_PATH   # the directory for all the datasets
-PYNET_SAVE_PATH   # the directory to save the best models, the outputs logs and the hyperparameters 
-PYNET_DATABASE_PATH # after training, the hyperparameters and training results from various 
+PYNET_SAVE_PATH   # the directory to save the best models, the outputs logs and the hyperparameters
+PYNET_DATABASE_PATH # after training, the hyperparameters and training results from various
                       # experiments is saved into a database for comparisions
-``` 
+```
 
 __2. Building the Model__
 
@@ -23,7 +23,7 @@ import theano.tensor as T
 import numpy as np
 
 from pynet.model AutoEncoder
-from pynet.layer import RELU, Sigmoid, Softmax, Linear 
+from pynet.layer import RELU, Sigmoid, Softmax, Linear
 from pynet.datasets.spec import *
 from pynet.learning_rule import LearningRule
 from pynet.log import Log
@@ -61,7 +61,7 @@ def autoencoder():
             save_to_database = {'name': 'Example.db',
                                 'records' : {'Dataset' : data.__class__.__name__,
                                              'Weight_Init_Seed' : mlp.rand_seed,
-                                             'Dropout_Below' : str([layer.dropout_below for layer in mlp.layers]),
+                                             'Blackout_Below' : str([layer.blackout_below for layer in mlp.layers]),
                                              'Batch_Size' : data.batch_size,
                                              'Layer_Size' : len(mlp.layers),
                                              'Layer_Dim' : str([layer.dim for layer in mlp.layers]),
@@ -83,31 +83,31 @@ def autoencoder():
                                                     'epoch_look_back' : 10, # number of epoch to look back for error improvement
                                                     'percent_decrease' : 0.001} # requires at least 0.001 = 0.1% decrease in error when look back of 10 epochs
                                 )
-                            
-    
+
+
     # building dataset, batch_size and preprocessor
     data = Laura_Blocks(train_valid_test_ratio=[8,1,1], batch_size=100, preprocessor=GCN())
-    
+
     # for AutoEncoder, the inputs and outputs must be the same
     train = data.get_train()
     data.set_train(train.X, train.X)
-    
+
     valid = data.get_valid()
     data.set_valid(valid.X, valid.X)
-    
+
     test = data.get_test()
     data.set_test(test.X, test.X)
-    
+
     # building autoencoder
     ae = AutoEncoder(input_dim = data.feature_size(), rand_seed=None)
     h1_layer = Tanh(dim=500, name='h1_layer', W=None, b=None)
-    
+
     # adding encoding layer
     ae.add_encode_layer(h1_layer)
-    
+
     # mirror layer has W = h1_layer.W.T
     h1_mirror = Tanh(name='h1_mirror', W=h1_layer.W.T, b=None)
-    
+
     # adding decoding mirror layer
     ae.add_decode_layer(h1_mirror)
 
@@ -116,10 +116,8 @@ def autoencoder():
                                 dataset = data,
                                 learning_rule = learning_rule,
                                 log = log)
-    
-    # finally run the training                         
+
+    # finally run the training
     train_object.run()
-    
+
 ```
-
-

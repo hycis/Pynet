@@ -9,7 +9,6 @@ class LearningRule(object):
                     L1_lambda = None,
                     L2_lambda = None,
                     training_cost = Cost(type='nll'),
-                    dropout_below = 1,
                     stopping_criteria = {'max_epoch' : 100,
                                         'cost' : Cost(type='error'),
                                         'epoch_look_back' : None,

@@ -40,8 +40,8 @@ def mlp():
 
     mlp = MLP(input_dim = data.feature_size())
 
-    mlp.add_layer(Sigmoid(dim=200, name='h1_layer', W=None, b=None, dropout_below=0.5))
-    mlp.add_layer(Sigmoid(dim=data.target_size(), name='output_layer', W=None, b=None, dropout_below=0.5))
+    mlp.add_layer(Sigmoid(dim=200, name='h1_layer', W=None, b=None, blackout_below=0.5))
+    mlp.add_layer(Sigmoid(dim=data.target_size(), name='output_layer', W=None, b=None, blackout_below=0.5))
 
     learning_rule = LearningRule(max_col_norm = 10,
                                 learning_rate = 0.01,
@@ -64,7 +64,7 @@ def mlp():
             save_to_database = {'name': 'Example.db',
                                 'records' : {'Dataset' : data.__class__.__name__,
                                              'Weight_Init_Seed' : mlp.rand_seed,
-                                             'Dropout_Below' : str([layer.dropout_below for layer in mlp.layers]),
+                                             'Blackout_Below' : str([layer.blackout_below for layer in mlp.layers]),
                                              'Batch_Size' : data.batch_size,
                                              'Layer_Size' : len(mlp.layers),
                                              'Layer_Dim' : str([layer.dim for layer in mlp.layers]),

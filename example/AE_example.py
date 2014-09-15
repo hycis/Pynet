@@ -62,7 +62,7 @@ def autoencoder():
 
     # building autoencoder
     ae = AutoEncoder(input_dim = data.feature_size(), rand_seed=None)
-    h1_layer = RELU(dim=100, name='h1_layer', W=None, b=None, dropout_below=0.5)
+    h1_layer = RELU(dim=100, name='h1_layer', W=None, b=None, blackout_below=0.5)
 
     # adding encoding layer
     ae.add_encode_layer(h1_layer)
@@ -78,7 +78,7 @@ def autoencoder():
             save_to_database = {'name': 'Example.db',
                                 'records' : {'Dataset' : data.__class__.__name__,
                                              'Weight_Init_Seed' : ae.rand_seed,
-                                             'Dropout_Below' : str([layer.dropout_below for layer in ae.layers]),
+                                             'Blackout_Below' : str([layer.blackout_below for layer in ae.layers]),
                                              'Batch_Size' : data.batch_size,
                                              'Layer_Size' : len(ae.layers),
                                              'Layer_Dim' : str([layer.dim for layer in ae.layers]),
@@ -114,7 +114,7 @@ def stacked_autoencoder():
             save_to_database = {'name': 'Database.db',
                                 'records' : {'Dataset' : data.__class__.__name__,
                                              'Weight_Init_Seed' : ae.rand_seed,
-                                             'Dropout_Below' : str([layer.dropout_below for layer in ae.layers]),
+                                             'Blackout_Below' : str([layer.blackout_below for layer in ae.layers]),
                                              'Batch_Size' : data.batch_size,
                                              'Layer_Size' : len(ae.layers),
                                              'Layer_Dim' : str([layer.dim for layer in ae.layers]),
@@ -224,7 +224,7 @@ def stacked_autoencoder():
             save_to_database = {'name': 'Database.db',
                                 'records' : {'Dataset' : data.__class__.__name__,
                                              'Weight_Init_Seed' : ae.rand_seed,
-                                             'Dropout_Below' : str([layer.dropout_below for layer in ae.layers]),
+                                             'Blackout_Below' : str([layer.blackout_below for layer in ae.layers]),
                                              'Batch_Size' : data.batch_size,
                                              'Layer_Size' : len(ae.layers),
                                              'Layer_Dim' : str([layer.dim for layer in ae.layers]),
