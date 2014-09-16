@@ -57,7 +57,6 @@ class Layer(object):
 		PARAM:
 			state_below: 2d array of inputs from layer below
         """
-        state_below = self._mask_state_below(state_below)
         return T.dot(state_below, self.W) + self.b
 
     def _layer_stats(self, state_below, layer_output):
@@ -114,6 +113,7 @@ class Linear(Layer):
         return output
 
     def _train_fprop(self, state_below):
+        state_below = self._mask_state_below(state_below)
         output = self._linear_part(state_below)
         return output
 
@@ -124,6 +124,7 @@ class Sigmoid(Layer):
         return T.nnet.sigmoid(output)
 
     def _train_fprop(self, state_below):
+        state_below = self._mask_state_below(state_below)
         output = self._linear_part(state_below)
         return T.nnet.sigmoid(output)
 
@@ -134,6 +135,7 @@ class RELU(Layer):
         return output * (output > 0.)
 
     def _train_fprop(self, state_below):
+        state_below = self._mask_state_below(state_below)
         output = self._linear_part(state_below)
         return output * (output > 0.)
 
@@ -144,6 +146,7 @@ class Softmax(Layer):
         return T.nnet.softmax(output)
 
     def _train_fprop(self, state_below):
+        state_below = self._mask_state_below(state_below)
         output = self._linear_part(state_below)
         return T.nnet.softmax(output)
 
@@ -154,6 +157,7 @@ class Tanh(Layer):
         return T.tanh(output)
 
     def _train_fprop(self, state_below):
+        state_below = self._mask_state_below(state_below)
         output = self._linear_part(state_below)
         return T.tanh(output)
 
@@ -164,5 +168,6 @@ class Softplus(Layer):
         return T.nnet.softplus(output)
 
     def _train_fprop(self, state_below):
+        state_below = self._mask_state_below(state_below)
         output = self._linear_part(state_below)
         return T.nnet.softplus(output)
