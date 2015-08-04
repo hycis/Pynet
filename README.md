@@ -134,8 +134,6 @@ In order to do hyperparams search, run the script in [launch.py](../hps/launch.p
 To do that, first log into helios
 
 ```bash
-ssh hycis@helios.calculquebec.ca
-cdwu # change to the scratch directory
 cd Pynet/hps
 cat model_config.py # this will show the configurations of different models
 ```
@@ -260,13 +258,11 @@ Below is the sample of model Laura from [model_config.py](../hps/model_config.py
 
 To sample one set of hyperparams and run it locally, issue
 ```bash
-cdwu
 cd Pynet/hps
 python launch.py --model Laura -c 1
 ```
 To submit 5 jobs to the gpu cluster, issue
 ```bash
-cdwu
 cd Pynet/hps
 python launch.py --model Laura -n 5 -g
 showq -u hycis
